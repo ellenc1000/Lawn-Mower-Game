@@ -1,6 +1,6 @@
 void setup ()
 {
-println("commit test 2");
+println("git transfer test");
 }
 
 void draw ()
