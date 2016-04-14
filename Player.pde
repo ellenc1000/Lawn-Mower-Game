@@ -73,17 +73,12 @@ class Player extends GameObject
     rect(playerCentre, playerCentre, playerWidth, playerHeight);
     fill(0);
     stroke(0);
-    ellipse(0, 0, 20, 20);
+    ellipse(0, 0, 20, 20);//ellipse or rect?
     rect(-10, 28, 5, 28);
     rect(10, 28, 5, 28);
     rect(0, 40, 25, 5);
 
     popMatrix();
-  }
-  
-  void grassUpdate ()
-  {
-    
   }
 }
 
