@@ -8,11 +8,6 @@ class Player extends GameObject
   Player (float x, float y)
   {
     super(x, y);
-    //values
-//    w = 50.0f;
-//    halfW = w / 2;
-    boolean[][] board;
-
   }
 
   void update ()
@@ -91,3 +86,4 @@ class Player extends GameObject
     
   }
 }
+

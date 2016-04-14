@@ -1,125 +1,58 @@
 class Grass extends GameObject
 {
+  int rows, cols;
+  boolean grid[][];
+  float cellWidth;
+  float cellHeight;
+  
+    int grassCount [][];
 
-  Grass(float x, float y)
+  Grass(int rows, int cols)
   {
-    super(x, y);
-    this.theta = theta;
-    int cols = 100;//columns
-    int rows = 100;//rows
-  }
+    super(0, 0);
+    this.rows = rows;
+    this.cols = cols;
 
+    grid = new boolean[rows][cols];
 
-  int cols = 100;//columns
-  int rows = 100;//rows
-  int cellWidth = width / cols;
-  int cellHeight = height / rows;
+    cellWidth = width / cols;
+    cellHeight = height / cols;  
 
-  boolean cellBoundingBox()
-  {
-    
-    float x = mower.pos.x;
-float y = mower.pos.y; 
-
-    if (mower.pos.x + 30 < x)
-    {
-      return true;
-    }
-
-    if (mower.pos.x - 30 > x)
-    {
-      return true;
-    }
-
-    if (mower.pos.y - 30 < y)
-    {
-      return true;
-    }
-
-    if (mower.pos.y + 30 > y)
-    {
-      return true;
-    }
-    println("hit");
-    return false;
-  }
-
-
-  void render()
-  {
-
-    //       if (PVector.dist(row, player.pos) < aiShip.halfW)
-    //    {
-    //      aiShip.health --;
-    //    }
-
-    int cols = 48;//columns
-    int rows = 48;//rows
-
-    for (int row = 3; row < rows; row ++)
-    {
-      for (int col = 3; col < cols; col ++)
+    // set the grid to be all true at the start
+    for (int row = 0; row < cols; row ++)
+    {      
+      for (int col = 0; col < cols; col ++)
       {
-        int cellWidth = width / cols;
-        int cellHeight = height / rows;
-
-        float x = col * cellWidth;
-        float y = row * cellHeight;
-
-        float[][] board;
-
-        board = new float [rows][cols];
-
-        if (gameStart == true && hit == false)
-        { 
-          board[row][col] = 1;
-        }
-
-        if (board[row][col] == 0 && hit == true)//kill cell
-        {
-          stroke(153, 102, 51);
-          fill(102, 255, 102);
-          println("go");
-          println(row, col);
-        } else if (board[row][col]==1)//dont kill
-        {
-          stroke(0, 90, 0);
-          fill(0, 102, 0);
-        }
-        rect(x, y, cellWidth, cellHeight);//the actual cells
-      }
-    }
-
-
-    for (int row = 3; row < rows; row ++)
-    {
-      for (int col = 3; col < cols; col ++)
-      {
-        int cellWidth = width / cols;
-        int cellHeight = height / rows;
-
-        float x = col * cellWidth;
-        float y = row * cellHeight;
-
-        float[][] board;
-
-        board = new float [rows][cols];
-
-        noFill();
-        rect(x, y, cellWidth, cellHeight);
-        if (!cellBoundingBox() && board[row][col] == 1)
-        {
-          board[row][col] = 0;
-          hit = true;
-        }
+        grid[row][col] = true;
       }
     }
   }
-
 
   void update()
   {
-    forward.x = sin(theta);
-    forward.y = -cos(theta);
+  }
+
+  void render()
+  {
+    //stroke(0,51,0);
+    noStroke(); // outlines on cells
+    //fill(0, 255, 0);
+    for (int row = 3; row < cols; row ++)
+    {
+      float y = row * cellHeight;
+      for (int col = 3; col < cols; col ++)
+      {
+        if (grid[row][col])
+        {
+          fill(0, 153, 51);
+        } else
+        {
+          fill(102, 255, 102);
+        }
+        float x = col * cellWidth;
+        rect(x, y, cellWidth, cellHeight); 
+      }
+    }
   }
 }
+
