@@ -1,6 +1,6 @@
 void setup ()
 {
-println("lab test - bash");
+println("second lab test");
 }
 
 void draw ()
