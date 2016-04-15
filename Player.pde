@@ -14,39 +14,43 @@ class Player extends GameObject
   {
     forward.x = sin(theta);
     forward.y = -cos(theta);
-    
-     if ((pos.x < 50))
+
+    if ((pos.x < 50))
     {
       pos.x = 50;
     }
-     if ((pos.x > width - 50))
+    if ((pos.x > width - 42))
     {
-      pos.x = width - 50;
+      pos.x = width - 42;
     }
-     if ((pos.y < 50))
+    if ((pos.y < 50))
     {
-     pos.y = 50; 
+      pos.y = 50;
     }
-     if ((pos.y > height - 50))
+    if ((pos.y > height - 42))
     {
-      pos.y = height - 50;
+      pos.y = height - 42;
     }
 
-    if (keys[UP])//equals to true assumed
+    if (gameStart && time > 1)
     {
-      pos.add(forward);//adds forward vector , pos+ = forward for unity
-    }
-    if (keys[DOWN])//equals to true assumed
-    {
-      pos.sub(forward);
-    }
-    if (keys[LEFT])
-    {
-      theta -= 0.1f;
-    }
-    if (keys[RIGHT])
-    {
-      theta += 0.1f;
+
+      if (keys[UP])//equals to true assumed
+      {
+        pos.add(forward);//adds forward vector , pos+ = forward for unity
+      }
+      if (keys[DOWN])//equals to true assumed
+      {
+        pos.sub(forward);
+      }
+      if (keys[LEFT])
+      {
+        theta -= 0.1f;
+      }
+      if (keys[RIGHT])
+      {
+        theta += 0.1f;
+      }
     }
   }
 
@@ -54,8 +58,8 @@ class Player extends GameObject
   int playerCentre = 0; 
   float playerWidth = 30;
   float playerHeight = 30;  
- 
-  
+
+
   void render ()
   {
     pushMatrix(); // stores current transformation

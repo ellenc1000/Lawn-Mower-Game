@@ -5,15 +5,21 @@ void setup()
 
   mower = new Player(height/2, width/2);
   grass = new Grass (48, 48);
+
+  time = totalTime;
 }
 
 PFont summerFont;
 
 boolean startScreen = true; 
 boolean gameStart;
-int level = 1;
-int totalGrass = 0;
-int time = 900;
+int level = 0;
+int time;
+int totalTime = 900;
+
+//String time = "60";
+//int t = 1;
+//int interval = 60;
 
 int hit = 0;
 int score = 0;
@@ -43,15 +49,15 @@ void startScreen()
     text("Mow the Lawn in time!", 80, 350);
     text("watch out for X", 170, 400);
     text("use the Arrow keys to Mow", 35, 450);
-    text("click to begin", 170, 500);
+    text("click to begin", 170, 650);
   }
 }
 
 void mouseClicked()
 {
   startScreen = false;
-
   gameStart = true;
+  reset ();
 }
 
 Player mower;
@@ -70,10 +76,41 @@ void gameText ()
   score = hit;
   textSize(30);
   text("Grass Cut " + score, 5, 35);
-  text("Time " + time, 500, 30);
   text("Level " + level, 500, 700);
+  text("Time " + time, 500, 30);
 }
 
+void timeUp()
+{
+  if (time == 0)
+  {
+    gameStart = false;
+    text("You Cut " + score + " blades of grass!", 50, 250);
+    text("Time's Up", 250, 350);
+    text("click to start level " + level,  120, 450);
+
+    if (gameStart == false && keyPressed)
+    {
+      if (key == ' ')
+      {
+        reset();
+      }
+    }
+  }
+}
+
+
+//void timer ()
+//{
+//  time = "60";
+//  t = 1;
+//  interval = 60;
+//  t = interval-int(millis()/1000);
+//  time = nf(t, 3);//convert int to string
+//  text("Time " + time, 500, 30);
+//  if(millis()> 60000)
+//  {t=1;}
+//}
 
 
 void draw()
@@ -84,11 +121,6 @@ void draw()
   summerFont = loadFont("KGSummerSunshineBlackout-48.vlw");
   textFont(summerFont);
 
-  if (gameStart)
-  {
-    time --;//game timer
-  }
-
   grass.update();
   grass.render();
 
@@ -98,11 +130,24 @@ void draw()
   mower.render();// slow if delete second set not sure why - 
 
   hitDetection ();
-  
+
   gameText ();
 
   startScreen();
 
-  println(startScreen);
+  timeUp ();
+
+  if (gameStart)
+  {
+    time --;//game timer
+  }
+
+  //println();
+}
+
+void reset()
+{
+  setup();
+  level +=1;
 }
 
