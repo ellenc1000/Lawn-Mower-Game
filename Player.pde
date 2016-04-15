@@ -31,12 +31,6 @@ class Player extends GameObject
     {
       pos.y = height - 50;
     }
-    
-//    if (play)
-//    {
-//      Cut c = new Cut (pos.x, pos.y, theta);
-//      cuts.add(c);
-//    }
 
     if (keys[UP])//equals to true assumed
     {

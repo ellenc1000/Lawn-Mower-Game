@@ -20,10 +20,10 @@ class Cloud extends GameObject
   
   int cloudCentre = -10;
   
-  void render () //draw item
-  {
-   rectMode(CENTER);
-   rect(cloudCentre, cloudcentre, 
-  }
+//  void render () //draw item
+//  {
+//   rectMode(CENTER);
+//   rect(cloudCentre, cloudcentre, 
+//  }
 
 }
