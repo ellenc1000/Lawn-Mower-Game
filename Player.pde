@@ -3,7 +3,8 @@ class Player extends GameObject
 
   float theta; // amount by which player is rotated
 
-  float w, halfW;
+  float w;
+  float halfW = 15;
 
   Player (float x, float y)
   {
@@ -38,6 +39,7 @@ class Player extends GameObject
       if (keys[UP])//equals to true assumed
       {
         pos.add(forward);//adds forward vector , pos+ = forward for unity
+        fuel --;
       }
       if (keys[DOWN])//equals to true assumed
       {

@@ -2,8 +2,12 @@ class GameObject // this is a class
 {
   PVector pos;
   PVector forward;
-  float theta;
-  float w, halfW;
+  float theta = 0.0f;
+  float w;
+  float halfW;
+  float speed = 5.0f;
+  color c; 
+  PVector velocity;
 
   GameObject(float x, float y)
   {

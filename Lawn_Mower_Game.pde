@@ -6,8 +6,21 @@ void setup()
   mower = new Player(height/2, width/2);
   grass = new Grass (48, 48);
 
+  canPosX = random(100, 600);
+  canPosY = -10;
+
+
+  can = new Fuelcan (canPosX, canPosY);
+  can2 = new Fuelcan (canPosX, canPosY);
+
+
   time = totalTime;
 }
+
+Player mower;
+Grass grass;
+Fuelcan can;
+Fuelcan can2;
 
 PFont summerFont;
 
@@ -16,13 +29,12 @@ boolean gameStart;
 int level = 0;
 int time;
 int totalTime = 900;
-
-//String time = "60";
-//int t = 1;
-//int interval = 60;
-
-int hit = 0;
-int score = 0;
+int fullFuel = 10000;
+boolean gotFuel = false;
+int hit;
+int score;
+float canPosX;
+float canPosY;
 
 boolean[] keys = new boolean[512];
 
@@ -38,6 +50,7 @@ void keyReleased ()
 
 void startScreen()
 {
+  rectMode(CENTER);
   if (startScreen == true)
   {
     fill(0, 153, 51);
@@ -60,9 +73,6 @@ void mouseClicked()
   reset ();
 }
 
-Player mower;
-Grass grass;
-
 void hitDetection ()
 {
   // Now turn off a cell on the gameboard if the player is over it!
@@ -71,23 +81,37 @@ void hitDetection ()
   grass.grid[row][col]= false; // collision
 }
 
+
+int fuel = fullFuel; 
+
 void gameText ()
 {
+  int fuelX = 555;
+  int fuelY = 6;
+  int fuelWidth = 130;
+  int fuelHeight = 23; 
   score = hit;
   textSize(30);
   text("Grass Cut " + score, 5, 35);
-  text("Level " + level, 500, 700);
-  text("Time " + time, 500, 30);
+  text("Lawn " + level, 500, 700);
+  //text("Time " + time, 500, 30);
+  text("Fuel ", 450, 35);
+  rectMode(CORNER);
+  fill(0);
+  rect(fuelX - 3, fuelY - 3, fuelWidth, fuelHeight + 6);
+  fill(255, 0, 0);
+  rect(fuelX, fuelY, fuel/80, fuelHeight);
 }
 
-void timeUp()
+void levelEnd()
 {
-  if (time == 0)
+  int nextLevel = level + 1;
+  if (fuel <= 0)
   {
     gameStart = false;
-    text("You Cut " + score + " blades of grass!", 50, 250);
-    text("Time's Up", 250, 350);
-    text("click to start level " + level,  120, 450);
+    text("You Cut " + score + " blades of grass!", 20, 250);
+    text("You ran out of fuel", 100, 350);
+    text("click to start level " + nextLevel, 100, 450);
 
     if (gameStart == false && keyPressed)
     {
@@ -100,29 +124,54 @@ void timeUp()
 }
 
 
-//void timer ()
-//{
-//  time = "60";
-//  t = 1;
-//  interval = 60;
-//  t = interval-int(millis()/1000);
-//  time = nf(t, 3);//convert int to string
-//  text("Time " + time, 500, 30);
-//  if(millis()> 60000)
-//  {t=1;}
-//}
+ArrayList<Fuelcan> cans = new ArrayList<Fuelcan>(); 
+
+void spawnCan ()
+{
+  if (level == 1 && fuel < 10000 && fuel > 3000 && gotFuel == false)// when can spawn
+  {
+    can.update();
+    can.render();
+  }
+  
+  if(level == 1 && fuel < 2000)
+  {
+  gotFuel = false;
+  }
+
+  if (level == 1 && fuel < 2000 && gotFuel == false)
+  {
+    can2.update();
+    can2.render();
+  }
+  
+//      for (int i = cans.size() -1 ; i >= 0  ; i --)
+//  {
+//    Fuelcan c = cans.get(i);
+//    c.update();
+//    c.render(); 
+//  } 
+
+  if (PVector.dist(can.pos, mower.pos) < mower.halfW)
+  {
+    fuel = fullFuel;
+    gotFuel = true;
+  }
+}
 
 
 void draw()
-{    
+{
+  rectMode(CENTER);
   background(153, 153, 102);
-  // stroke(51, 153, 51);
 
   summerFont = loadFont("KGSummerSunshineBlackout-48.vlw");
   textFont(summerFont);
 
   grass.update();
   grass.render();
+
+  spawnCan ();
 
   mower.update();
   mower.render();
@@ -135,19 +184,16 @@ void draw()
 
   startScreen();
 
-  timeUp ();
+  levelEnd();
 
-  if (gameStart)
-  {
-    time --;//game timer
-  }
-
-  //println();
+  println(fuel);
 }
 
 void reset()
 {
   setup();
   level +=1;
+  fuel = fullFuel;
+  gotFuel = false;
 }
 
