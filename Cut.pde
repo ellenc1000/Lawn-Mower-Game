@@ -11,8 +11,6 @@ Cut(float x, float y, float theta)
   {
     forward.x = sin(theta);
     forward.y = -cos(theta);
-    
-    //pos.add(forward);
   }
   
   void render()

@@ -1,7 +1,7 @@
 class Player extends GameObject
 {
 
-  float theta; // amount by which player is rotated
+  float theta;
 
   float w;
   float halfW = 15;
@@ -38,29 +38,29 @@ class Player extends GameObject
 
       if (keys[UP])//equals to true assumed
       {
-        pos.add(forward);//adds forward vector , pos+ = forward for unity
+        pos.add(forward);
         if (level == 1)
         {
-          fuel -= 1;// --;
+          fuel -= 1;
         }
         if (level == 2)
         {
-          fuel -= 2;// -= 2;
+          fuel -= 2;
         }
         if (level == 3)
         {
-          fuel -= 3;// -= 3;
+          fuel -= 3;
         }
         if (level == 4)
         {
-          fuel -= 4;// -=4;
+          fuel -= 4;
         }
         if (level == 5)
         {
-          fuel -= 5; //-=5;
+          fuel -= 5;
         }
       } 
-      if (keys[DOWN])//equals to true assumed
+      if (keys[DOWN])
       {
         pos.sub(forward);
 
@@ -93,7 +93,7 @@ class Player extends GameObject
     rect(playerCentre, playerCentre, playerWidth, playerHeight);
     fill(0);
     stroke(0);
-    ellipse(0, 0, 20, 20);//ellipse or rect?
+    ellipse(0, 0, 20, 20);
     rect(-10, 28, 5, 28);
     rect(10, 28, 5, 28);
     rect(0, 40, 25, 5);

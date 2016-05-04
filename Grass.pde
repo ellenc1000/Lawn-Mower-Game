@@ -34,9 +34,7 @@ class Grass extends GameObject
   void render()
   {
     hit = 0;
-    //stroke(0,51,0);
-    noStroke(); // outlines on cells
-    //fill(0, 255, 0);
+    noStroke(); 
     for (int row = 3; row < cols; row ++)
     {
       float y = row * cellHeight;
@@ -56,5 +54,4 @@ class Grass extends GameObject
     }
   }
 }
-//bryan - add partical system with grass coming out of mower and enemies and powerups
 

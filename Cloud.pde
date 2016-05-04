@@ -1,7 +1,7 @@
 class Cloud extends GameObject
 {
 
-  float theta; // amount by which player is rotated
+  float theta;
 
   float w, halfW;
 
@@ -10,7 +10,7 @@ class Cloud extends GameObject
     super(x, y);
   }
 
-  void update () // movement
+  void update ()
   {
     forward.x = sin(theta);
     forward.y = -cos(theta);
@@ -19,7 +19,7 @@ class Cloud extends GameObject
   }
 
 
-  void render () //draw item
+  void render ()
   {
 
     pushMatrix();
@@ -37,8 +37,6 @@ class Cloud extends GameObject
     ellipse(20, 0, 20, 30);
     ellipse(-30, 0, 10, 10);
     ellipse(30, 0, 10, 10);
-//    stroke(0, 0, 255);
-//    line(0, 50, 0, 50);
     noStroke();
     popMatrix();
   }

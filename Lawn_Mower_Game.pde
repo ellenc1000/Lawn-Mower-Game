@@ -1,60 +1,18 @@
-
-void setup()
-{
-  size(700, 700);
-  background(0, 102, 0);
-
-  mower = new Player(height/2, width/2);
-  grass = new Grass (48, 48);
-
-  canPosX = random(100, 600);
-  canPosY = -10;
-
-
-  can = new Fuelcan (canPosX, canPosY);
-  can2 = new Fuelcan (canPosX, canPosY);
-
-  cloud = new Cloud (random(50, 600), 650);
-
-  rock1 = new Rock (rockX, rockY);
-
-  for (int i = 0; i < levelRocks; i ++)
-  {
-    Rock rock = new Rock( random(100, width - 100), random(100, height - 100));
-    rocks.add(rock);
-  }
-
-  minim = new Minim(this);
-
-  mowerSound = minim.loadFile("mower.mp3");
-  gameMusic = minim.loadFile("game music.mp3");
-}
-
-import ddf.minim.spi.*;
-import ddf.minim.signals.*;
 import ddf.minim.*;
-import ddf.minim.analysis.*;
-import ddf.minim.ugens.*;
-import ddf.minim.effects.*;
-
-AudioPlayer mowerSound;
-AudioPlayer gameMusic;
 
 Minim minim;
 
-//void stop()
-//{
-//  mowerSound.close();
-//}
-
-//AudioSnippet mowerSound;
+AudioPlayer mowerSound;
+AudioPlayer gameMusic;
+AudioSnippet rainSound;
 
 ArrayList<Rock> rocks = new ArrayList<Rock>();
+
+ArrayList<Fuelcan> cans = new ArrayList<Fuelcan>();
 
 Player mower;
 Grass grass;
 Fuelcan can;
-Fuelcan can2;
 Cloud cloud;
 Rock rock1;
 Rock rock2;
@@ -67,11 +25,13 @@ boolean gameStart;
 int level = 0;
 boolean clickLevel = false;
 float levelRocks = 1;
+float levelCans;
 int fuel = 1; 
 int fullFuel = 10000;
 boolean gotFuel = false;
 int hit;
 int score;
+boolean musicStop = false;
 
 float canPosX;
 float canPosY;
@@ -90,7 +50,7 @@ void keyReleased ()
   keys[keyCode] = false;
 } 
 
-void startScreen()
+void startScreen()//////////////////////////////////////////////////
 {
   rectMode(CENTER);
   if (startScreen == true)
@@ -106,12 +66,10 @@ void startScreen()
     text("watch out for rocks!", 100, 450);
     text("use the Arrow keys to Mow", 35, 550);
     text("click to begin", 170, 650);
-    //final String username = showInputDialog("Who is playing?");
-    //saveStrings("scores.txt", username);
   }
 }
 
-void mouseClicked()
+void mouseClicked()//////////////////////////////////////////////////
 {
   startScreen = false;
 
@@ -122,18 +80,18 @@ void mouseClicked()
   }
 }
 
-void music ()
+void music ()//////////////////////////////////////////////////
 {
   gameMusic.loop();
   gameMusic.rewind();
 
   mowerSound.loop();
   mowerSound.rewind();
-  
+
   println("music play");
 }
 
-void hitDetection ()
+void hitDetection ()//////////////////////////////////////////////////
 {
   int row = (int) (mower.pos.y / grass.cellHeight);
   int col = (int) (mower.pos.x / grass.cellWidth);
@@ -144,7 +102,7 @@ void hitDetection ()
   grass.grid[row][col]= false; // collision
 }
 
-void cloudHit ()///////fix coverage size
+void cloudHit ()//////////////////////////////////////////////////
 {
   int row = (int) (cloud.pos.y / grass.cellHeight);
   int col = (int) (cloud.pos.x / grass.cellWidth);
@@ -154,7 +112,7 @@ void cloudHit ()///////fix coverage size
   grass.grid[row][col+2]= true; // collision
 }
 
-void gameText ()
+void gameText ()//////////////////////////////////////////////////
 {
   //score = hit;
   fill(0);
@@ -162,7 +120,7 @@ void gameText ()
   text("Lawn " + level, 500, 700);
 }
 
-void fuelBar ()
+void fuelBar ()//////////////////////////////////////////////////
 {
   if ( fuel > 10000)//fuel never goes past bar total
   {
@@ -184,11 +142,12 @@ void fuelBar ()
   rect(fuelX, fuelY, fuel/80, fuelHeight);
 }
 
-void levelEnd()
+void levelEnd()//////////////////////////////////////////////////
 {
   int nextLevel = level + 1;
   if (fuel <= 0)
   {
+    musicStop = true;
     gameStart = false;
     text("You Cut " + score + " blades of grass!", 20, 250);
     text("You ran out of fuel", 100, 350);
@@ -204,26 +163,20 @@ void levelEnd()
   }
 }
 
-void spawnCan ()
+void spawnCan ()//////////////////////////////////////////////////
 {
-  if (level == 1 && fuel < 8000 && fuel > 3000 && gotFuel == false)// when can spawn
+  if (level == 1 && fuel < 8000 && fuel > 5000 && gotFuel == false)// when can spawn
   {
     can.update();
     can.render();
   }
 
-  if (level == 1 && fuel < 3000)
+  if (level == 1 && fuel < 1000)
   {
     gotFuel = false;
-    can2.update();
-    can2.render();
+    can.update();
+    can.render();
   }
-
-  //  if (level == 1 && fuel < 2000 && gotFuel == false)
-  //  {
-  //    can2.update();
-  //    can2.render();
-  //  }
 
   if (level == 2 && fuel < 7000 && fuel > 4000 && gotFuel == false)// when can spawn
   {
@@ -236,33 +189,16 @@ void spawnCan ()
     gotFuel = false;
   }
 
-  if (level == 2 && fuel < 2000 && gotFuel == false)
-  {
-    can2.update();
-    can2.render();
-  }
-  //      for (int i = cans.size() -1 ; i >= 0  ; i --)
-  //  {
-  //    Fuelcan c = cans.get(i);
-  //    c.update();
-  //    c.render(); 
-  //  } 
-
   if (PVector.dist(can.pos, mower.pos) < mower.halfW)
   {
-    fuel += 1000;
+    fuel += 400;
     gotFuel = true;
     can.pos.y = -10;
-  }
-
-  if (PVector.dist(can2.pos, mower.pos) < mower.halfW)
-  {
-    fuel += 1000;
-    gotFuel = true;
+    can.pos.x = (random(100, 600));
   }
 }
 
-void gameEnd ()
+void gameEnd ()//////////////////////////////////////////////////
 {
   if (level == 6)
   {
@@ -277,48 +213,44 @@ void gameEnd ()
     text("Lets see what your", 120, 300);
     text("neighbours thought", 110, 350);
     text("you got a grade of...", 115, 450);
+    gameMusic.pause();
+    println("it should pause here");
 
     if ( score < 1000)
     {
-      text("F", 400, 500);
+      text("F", 200, 500);
       text("How?!?...", 190, 600);
     }
     if ( score > 1000 && score < 3000)
     {
-      text("E", 400, 500);
+      text("E", 200, 500);
       text("try again", 190, 600);
     }
     if ( score > 3000 && score < 5000)
     {
-      text("D", 400, 500);
+      text("D", 200, 500);
       text("I think you need to work", 180, 600);
       text("on your mowing skills", 180, 600);
     }
     if ( score > 5000 && score < 7000)
     {
-      text("C", 400, 500);
+      text("C", 200, 500);
       text("Not Bad", 180, 600);
     }
     if ( score > 7000 && score < 8000 )
     {
-      text("B", 400, 500);
+      text("B", 200, 500);
       text("Well done!!", 180, 600);
     }
     if ( score > 8000)
     {
-      text("A", 400, 500);
+      text("A", 200, 500);
       text("Your the real MVM!", 180, 600);
     }
   }
 }
 
-//void updateHighscore() {
-//  scoreTable = scoreTable + score + " " + username;
-//  String[] list = split(scoreTable, '_');
-//  saveStrings("Highscore.txt", list);
-//}
-
-void rocks ()
+void rocks ()//////////////////////////////////////////////////
 {
   if (level ==1)
   {
@@ -396,25 +328,56 @@ void rocks ()
   }
 }
 
-void clouds ()
+void clouds ()//////////////////////////////////////////////////
 
 {
-
-  if (hit > 100 && cloud.pos.y > 20)
+  if (level > 1)
   {
-    cloud.update();
-    cloud.render();
-  }
-  if (cloud.pos.y < 20)
-  {
-    cloud.pos.y = 650;
+    if (hit > 100 && cloud.pos.y > 20)
+    {
+      cloud.update();
+      cloud.render();
+      rainSound.play();
+    } else {
+      rainSound.pause();
+    }
+    if (cloud.pos.y < 20)
+    {
+      cloud.pos.y = 650;
+    }
   }
 }
 
-//import static javax.swing.JOptionPane.*;
+void setup()
+{
+  size(700, 700);
+  background(0, 102, 0);
+
+  minim = new Minim(this);
+
+  mowerSound = minim.loadFile("mower.mp3");
+  gameMusic = minim.loadFile("game music.mp3");
+  rainSound = minim.loadSnippet("rain.wav");
+
+  mower = new Player(height/2, width/2);
+  grass = new Grass (48, 48);
+
+  canPosX = random(100, 600);
+  canPosY = -10;
+
+  can = new Fuelcan (canPosX, canPosY);
+
+  cloud = new Cloud (random(50, 600), 650);
+
+  for (int i = 0; i < levelRocks; i ++)
+  {
+    Rock rock = new Rock( random(100, width - 100), random(100, height - 100));
+    rocks.add(rock);
+  }
+}
 
 
-void draw()
+void draw()//////////////////////////////////////////////////
 { 
   rectMode(CENTER);
   background(153, 153, 102);
@@ -422,22 +385,38 @@ void draw()
   summerFont = loadFont("KGSummerSunshineBlackout-48.vlw");
   textFont(summerFont);
 
-if(gameStart == true)
-{
-  music ();
-}
+  //music();
+
+  //if(gameStart)
+  //{
+  gameMusic.loop();
+  gameMusic.rewind();
+  //}
+  //else
+  //{
+  //gameMusic.pause();
+  //}
+
+  mowerSound.loop();
+  mowerSound.rewind();
+
+  //  if (musicStop == true)
+  //  {
+  //    gameMusic.pause();
+  //    mowerSound.pause();
+  //  }
 
   grass.update();
   grass.render();
 
-  spawnCan (); 
+  spawnCan ();
 
   rocks ();
 
   mower.update();
   mower.render();
   mower.update();
-  mower.render();// slow if delete second set not sure why -
+  mower.render();
 
   clouds ();
 
@@ -459,10 +438,10 @@ if(gameStart == true)
     fuel = 0;
   }
 
-  println(gameStart);
+  println(cans.size());
 }
 
-void reset()
+void reset()//////////////////////////////////////////////////
 {
   if (level < 6)
   {
@@ -470,6 +449,9 @@ void reset()
     level +=1;
     fuel = fullFuel;
     gotFuel = false;
+    //mowerSound.pause();
+    minim.stop();
+    //musicStop = false;
   }
 }
 

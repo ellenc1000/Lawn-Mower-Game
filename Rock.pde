@@ -10,16 +10,13 @@ class Rock extends GameObject
     super(x, y);
   }
 
-  void update () // movement
+  void update ()
   {
-//    forward.x = sin(theta);
-//    forward.y = -cos(theta);
-//    
-//    pos.add(forward);
+
   }
 
 
-  void render () //draw item
+  void render ()
   {
     rectMode(CENTER);
 
@@ -27,7 +24,6 @@ class Rock extends GameObject
     translate(pos.x, pos.y);
     fill(105);
     noStroke();
-//    rect(0, 0, 30, 20);
     ellipse(0, 0, 30, 30);
     ellipse(15, 5, 20, 20);
 

@@ -1,4 +1,4 @@
-class GameObject // this is a class
+class GameObject 
 {
   PVector pos;
   PVector forward;
@@ -16,10 +16,9 @@ class GameObject // this is a class
     forward = new PVector(0, -1);
     w = 50.0f;
     halfW = w / 2;
-    //println("in game object constructer");
   }
   
-  void update()//empty methods
+  void update()
   {
   }
   
