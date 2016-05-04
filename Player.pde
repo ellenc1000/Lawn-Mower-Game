@@ -33,18 +33,38 @@ class Player extends GameObject
       pos.y = height - 42;
     }
 
-    if (gameStart && time > 1)
+    if (gameStart)
     {
 
       if (keys[UP])//equals to true assumed
       {
         pos.add(forward);//adds forward vector , pos+ = forward for unity
-        fuel --;
-      }
+        if (level == 1)
+        {
+          fuel -= 1;// --;
+        }
+        if (level == 2)
+        {
+          fuel -= 2;// -= 2;
+        }
+        if (level == 3)
+        {
+          fuel -= 3;// -= 3;
+        }
+        if (level == 4)
+        {
+          fuel -= 4;// -=4;
+        }
+        if (level == 5)
+        {
+          fuel -= 5; //-=5;
+        }
+      } 
       if (keys[DOWN])//equals to true assumed
       {
         pos.sub(forward);
-      }
+
+      } 
       if (keys[LEFT])
       {
         theta -= 0.1f;

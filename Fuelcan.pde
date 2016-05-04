@@ -46,10 +46,10 @@ class Fuelcan extends GameObject
 //      //cans.add(c);
 //}
 
-    if ((pos.x < 0) || (pos.x > width) || (pos.y < 0) || (pos.y > height))
-    {
-      cans.remove(this);
-    }  
+//    if ((pos.x < 0) || (pos.x > width) || (pos.y < 0) || (pos.y > height))
+//    {
+//      cans.remove(this);
+//    }  
   }
 
   void render()

@@ -47,7 +47,7 @@ class Grass extends GameObject
           fill(0, 153, 51);
         } else
         {
-          fill(102, 255, 102);
+          fill(51, 204, 51);
           hit ++;
         }
         float x = col * cellWidth;
