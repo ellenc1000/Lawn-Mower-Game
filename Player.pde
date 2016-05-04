@@ -63,7 +63,26 @@ class Player extends GameObject
       if (keys[DOWN])
       {
         pos.sub(forward);
-
+        if (level == 1)
+        {
+          fuel -= 1;
+        }
+        if (level == 2)
+        {
+          fuel -= 2;
+        }
+        if (level == 3)
+        {
+          fuel -= 3;
+        }
+        if (level == 4)
+        {
+          fuel -= 4;
+        }
+        if (level == 5)
+        {
+          fuel -= 5;
+        }
       } 
       if (keys[LEFT])
       {

@@ -58,12 +58,16 @@ void startScreen()//////////////////////////////////////////////////
     fill(0, 153, 51);
     rect(350, 350, 700, 700);
     fill (0);
+    textSize(30);
+    text("The", 300, 100);
     textSize(75);
     text("Lawn Mower", 25, 200);
     textSize(30);
+    text("Game", 290, 250);
+    textSize(30);
     text("Mow each neighbour's lawn", 40, 350);
     text("before you run out of fuel!", 30, 400);
-    text("watch out for rocks!", 100, 450);
+    text("watch out for rocks!", 100, 475);
     text("use the Arrow keys to Mow", 35, 550);
     text("click to begin", 170, 650);
   }
@@ -165,29 +169,29 @@ void levelEnd()//////////////////////////////////////////////////
 
 void spawnCan ()//////////////////////////////////////////////////
 {
-  if (level == 1 && fuel < 8000 && fuel > 5000 && gotFuel == false)// when can spawn
+  if (fuel < 8000 && fuel > 5000 && gotFuel == false)// when can spawn
   {
     can.update();
     can.render();
   }
 
-  if (level == 1 && fuel < 1000)
+  if (fuel < 1000)
   {
     gotFuel = false;
     can.update();
     can.render();
   }
 
-  if (level == 2 && fuel < 7000 && fuel > 4000 && gotFuel == false)// when can spawn
-  {
-    can.update();
-    can.render();
-  }
-
-  if (level == 2 && fuel < 2000)
-  {
-    gotFuel = false;
-  }
+//  if (level == 2 && fuel < 7000 && fuel > 4000 && gotFuel == false)// when can spawn
+//  {
+//    can.update();
+//    can.render();
+//  }
+//
+//  if (level == 2 && fuel < 2000)
+//  {
+//    gotFuel = false;
+//  }
 
   if (PVector.dist(can.pos, mower.pos) < mower.halfW)
   {
@@ -216,36 +220,25 @@ void gameEnd ()//////////////////////////////////////////////////
     gameMusic.pause();
     println("it should pause here");
 
-    if ( score < 1000)
+    if ( score < 500)
     {
-      text("F", 200, 500);
-      text("How?!?...", 190, 600);
+      text("F", 320, 500);
+      text("How?!?...", 220, 600);
     }
-    if ( score > 1000 && score < 3000)
+    if ( score > 1000 && score < 1500)
     {
-      text("E", 200, 500);
-      text("try again", 190, 600);
+      text("C", 320, 500);
+      text("Not Bad", 220, 600);
     }
-    if ( score > 3000 && score < 5000)
+    if ( score > 1500 && score < 2000 )
     {
-      text("D", 200, 500);
-      text("I think you need to work", 180, 600);
-      text("on your mowing skills", 180, 600);
+      text("B", 320, 500);
+      text("Well done!!", 220, 600);
     }
-    if ( score > 5000 && score < 7000)
+    if ( score > 2000)
     {
-      text("C", 200, 500);
-      text("Not Bad", 180, 600);
-    }
-    if ( score > 7000 && score < 8000 )
-    {
-      text("B", 200, 500);
-      text("Well done!!", 180, 600);
-    }
-    if ( score > 8000)
-    {
-      text("A", 200, 500);
-      text("Your the real MVM!", 180, 600);
+      text("A", 320, 500);
+      text("Your the real MVM!", 200, 600);
     }
   }
 }
@@ -409,9 +402,9 @@ void draw()//////////////////////////////////////////////////
   grass.update();
   grass.render();
 
-  spawnCan ();
-
   rocks ();
+  
+  spawnCan ();
 
   mower.update();
   mower.render();
