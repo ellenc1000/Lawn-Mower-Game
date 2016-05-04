@@ -31,7 +31,6 @@ int fullFuel = 10000;
 boolean gotFuel = false;
 int hit;
 int score;
-boolean musicStop = false;
 
 float canPosX;
 float canPosY;
@@ -84,16 +83,16 @@ void mouseClicked()//////////////////////////////////////////////////
   }
 }
 
-void music ()//////////////////////////////////////////////////
-{
-  gameMusic.loop();
-  gameMusic.rewind();
-
-  mowerSound.loop();
-  mowerSound.rewind();
-
-  println("music play");
-}
+//void music ()//////////////////////////////////////////////////
+//{
+//  gameMusic.loop();
+//  gameMusic.rewind();
+//
+//  mowerSound.loop();
+//  mowerSound.rewind();
+//
+//  println("music play");
+//}
 
 void hitDetection ()//////////////////////////////////////////////////
 {
@@ -151,7 +150,6 @@ void levelEnd()//////////////////////////////////////////////////
   int nextLevel = level + 1;
   if (fuel <= 0)
   {
-    musicStop = true;
     gameStart = false;
     text("You Cut " + score + " blades of grass!", 20, 250);
     text("You ran out of fuel", 100, 350);
