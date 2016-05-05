@@ -182,9 +182,9 @@ void spawnCan ()//////////////////////////////////////////////////
 
   if (PVector.dist(can.pos, mower.pos) < mower.halfW)
   {
-    fuel += 400;
+    fuel += 600;
     gotFuel = true;
-    can.pos.y = -10;
+    can.pos.y = -20;
     can.pos.x = (random(100, 600));
   }
 }
@@ -217,12 +217,12 @@ void gameEnd ()//////////////////////////////////////////////////
       text("C", 320, 500);
       text("Not Bad", 220, 600);
     }
-    if ( score > 1500 && score < 2000 )
+    if ( score > 1500 && score < 2500 )
     {
       text("B", 320, 500);
       text("Well done!!", 220, 600);
     }
-    if ( score > 2000)
+    if ( score > 2500)
     {
       text("A", 320, 500);
       text("Your the real MVM!", 150, 600);
