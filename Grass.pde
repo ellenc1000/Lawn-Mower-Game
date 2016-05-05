@@ -17,7 +17,6 @@ class Grass extends GameObject
     cellWidth = width / cols;
     cellHeight = height / cols;  
 
-    // set the grid to be all true at the start
     for (int row = 0; row < cols; row ++)
     {      
       for (int col = 0; col < cols; col ++)

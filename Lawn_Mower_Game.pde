@@ -217,7 +217,7 @@ void gameEnd ()//////////////////////////////////////////////////
       text("C", 320, 500);
       text("Not Bad", 220, 600);
     }
-    if ( score > 1500 && score < 2500 )
+    if ( score > 1500 && score < 2500)
     {
       text("B", 320, 500);
       text("Well done!!", 220, 600);
