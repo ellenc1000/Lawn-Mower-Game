@@ -37,7 +37,7 @@ float canPosY;
 float rockX = random(50, 550);
 float rockY = random(50, 550);
 
-boolean[] keys = new boolean[512];
+boolean[] keys = new boolean[2000];
 
 void keyPressed ()
 {
@@ -167,7 +167,7 @@ void levelEnd()//////////////////////////////////////////////////
 
 void spawnCan ()//////////////////////////////////////////////////
 {
-  if (fuel < 8000 && fuel > 5000 && gotFuel == false)// when can spawn
+  if (fuel < 8000 && fuel > 4000 && gotFuel == false)// when can spawn
   {
     can.update();
     can.render();
@@ -179,17 +179,6 @@ void spawnCan ()//////////////////////////////////////////////////
     can.update();
     can.render();
   }
-
-//  if (level == 2 && fuel < 7000 && fuel > 4000 && gotFuel == false)// when can spawn
-//  {
-//    can.update();
-//    can.render();
-//  }
-//
-//  if (level == 2 && fuel < 2000)
-//  {
-//    gotFuel = false;
-//  }
 
   if (PVector.dist(can.pos, mower.pos) < mower.halfW)
   {
@@ -236,7 +225,7 @@ void gameEnd ()//////////////////////////////////////////////////
     if ( score > 2000)
     {
       text("A", 320, 500);
-      text("Your the real MVM!", 200, 600);
+      text("Your the real MVM!", 150, 600);
     }
   }
 }

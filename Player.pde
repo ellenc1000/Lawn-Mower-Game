@@ -36,7 +36,7 @@ class Player extends GameObject
     if (gameStart)
     {
 
-      if (keys[UP])//equals to true assumed
+      if (keys[UP])
       {
         pos.add(forward);
         if (level == 1)

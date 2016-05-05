@@ -1,7 +1,7 @@
 class Rock extends GameObject
 {
 
-  float theta; // amount by which player is rotated
+  float theta;
 
   float w, halfW;
 

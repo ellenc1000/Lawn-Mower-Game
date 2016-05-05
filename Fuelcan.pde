@@ -1,4 +1,3 @@
-// The class name starts with uppercase
 class Fuelcan extends GameObject
 { 
 
